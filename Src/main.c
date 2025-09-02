@@ -67,8 +67,35 @@ void SystemClock_Config(void);
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
   if (huart->Instance == USART2)
-  {
-    // Si es minúscula, conviértela a mayúscula
+{
+//En estas lineas cual quiera que se la letra o palabra que se introduzca en ,
+     //la consola va a devolver la letra z, segun la cantidada de letras va a devolver la z
+      uint8_t reply = 'z';
+      HAL_UART_Transmit(&huart2, &reply, 1, 10); // Enviar el byte recibido de vuelta
+      HAL_UART_Receive_IT(&huart2, &rx_data, 1);
+  } 
+
+
+
+/*// Para esta parte del codigo si se coloca la letra  "a" devolvera la letra "Z"
+    uint8_t reply;
+    // Si recibimos 'a', devolvemos 'z'
+    if (rx_data == 'a')
+    {
+        reply = 'z';
+        HAL_UART_Transmit(&huart2, &reply, 1, 10);
+    }
+    else
+    {
+        //Si es otro caracter, lo devolvemos igual (eco normal)
+        HAL_UART_Transmit(&huart2, &rx_data, 1, 10);
+    }
+        HAL_UART_Receive_IT(&huart2, &rx_data, 1);
+  }
+*/
+
+/*
+  // Si es minúscula, se conviérte a mayúscula
   if (rx_data >= 'a' && rx_data <= 'z') {
       rx_data -= 32; // Convierte a mayúscula
   }
@@ -78,6 +105,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     // Volvemos a habilitar la interrupción de recepción UART para el próximo byte
     HAL_UART_Receive_IT(&huart2, &rx_data, 1);
   }
+*/
+
+
 }
 /* USER CODE END 0 */
 
